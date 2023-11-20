@@ -1,0 +1,71 @@
+import sys
+import socket
+import threading
+import ipaddress
+def getIPaddressFromARGS():
+	if len(sys.argv) < 2:
+		print("Requires IP address. \nExample: python3 scan.py 192.168.1.1")
+		sys.exit(1)
+	ip_address = sys.argv[1]
+
+	try:
+		ipaddress.ip_address(ip_address)
+	except ValueError:
+		print("Not valid")
+		sys.exit(1)
+	
+	return ip_address
+
+getIPaddressFromARGS()
+ip_address = getIPaddressFromARGS()
+
+ports = {
+21: "FTP",
+22: "SSH", 
+23: "Telnet", 
+25: "SMTP",
+53: "DNS", 
+80: "HTTP", 
+139: "NetBios", 
+443: "HTTPS", 
+1433: "Microsoft Desktop Protocol", 
+1521: "Oracle", 
+3306: "MySQL", 
+3389: "RDP", 
+5900: "VNC", 
+6667: "IRC", 
+8080: "HTTP alternate", 
+8081: "HTTP alternate", 
+9000: "HTTP alternate", 
+27017: "MongoDB"
+}
+open_ports = []
+
+
+def probe_port(ip_address, port, result = 1): 
+  
+  try: 
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+    sock.settimeout(0.5) 
+    r = sock.connect_ex((ip_address, port))   
+    if r == 0: 
+      result = r 
+    sock.close() 
+  except Exception as e: 
+    pass 
+  return result
+
+for port in ports: 
+    sys.stdout.flush() 
+    response = probe_port(ip_address, port) 
+    if response == 0: 
+        open_ports.append(port) 
+    
+    
+
+if open_ports: 
+  print ("Open Ports are: ") 
+  for port in sorted(open_ports):
+    print(f"{port} ({ports[port]}) is open.") 
+else: 
+	print ("No open ports.")
