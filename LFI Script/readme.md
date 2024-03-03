@@ -1,1 +1,1 @@
-Test
+# Automatic Local File Inclusion Script
