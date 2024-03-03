@@ -9,4 +9,5 @@ This is just a PoC. This is inspired from: fimap, an old, outdated LFI script.
 2) python3 script.py
 3) Enter vulnerable URL. i.e. "http://10.10.10.10/search.php?page="
 And off it goes! :)
+![image](https://github.com/Cameron-Skerritt/Personal-Projects/assets/122690042/4b7a91a3-c7eb-4e0b-bfa8-bd773bd86f48)
 
